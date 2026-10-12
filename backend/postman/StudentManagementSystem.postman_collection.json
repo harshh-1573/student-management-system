@@ -1,0 +1,427 @@
+{
+  "info": {
+    "name": "Student Management System API",
+    "description": "Complete Postman collection for Student Management System backend with JWT authentication and RBAC",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8080/api",
+      "type": "string"
+    },
+    {
+      "key": "jwt_token",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{jwt_token}}",
+        "type": "string"
+      }
+    ]
+  },
+  "item": [
+    {
+      "name": "1. Authentication",
+      "item": [
+        {
+          "name": "Login - Admin",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var jsonData = pm.response.json();",
+                  "if (jsonData.success && jsonData.data.token) {",
+                  "    pm.collectionVariables.set('jwt_token', jsonData.data.token);",
+                  "    console.log('JWT Token set successfully');",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "auth": { "type": "noauth" },
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"admin@sms.com\",\n  \"password\": \"Admin@123\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/auth/login",
+              "host": ["{{baseUrl}}"],
+              "path": ["auth", "login"]
+            }
+          }
+        },
+        {
+          "name": "Login - Teacher",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var jsonData = pm.response.json();",
+                  "if (jsonData.success && jsonData.data.token) {",
+                  "    pm.collectionVariables.set('jwt_token', jsonData.data.token);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "auth": { "type": "noauth" },
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"alan.turing@sms.com\",\n  \"password\": \"Teacher@123\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/auth/login",
+              "host": ["{{baseUrl}}"],
+              "path": ["auth", "login"]
+            }
+          }
+        },
+        {
+          "name": "Login - Student",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var jsonData = pm.response.json();",
+                  "if (jsonData.success && jsonData.data.token) {",
+                  "    pm.collectionVariables.set('jwt_token', jsonData.data.token);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "auth": { "type": "noauth" },
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"john.doe@sms.com\",\n  \"password\": \"Student@123\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/auth/login",
+              "host": ["{{baseUrl}}"],
+              "path": ["auth", "login"]
+            }
+          }
+        },
+        {
+          "name": "Register New User",
+          "request": {
+            "auth": { "type": "noauth" },
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"fullName\": \"Grace Hopper\",\n  \"email\": \"grace.hopper@sms.com\",\n  \"password\": \"Grace@123\",\n  \"role\": \"ROLE_TEACHER\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/auth/register",
+              "host": ["{{baseUrl}}"],
+              "path": ["auth", "register"]
+            }
+          }
+        },
+        {
+          "name": "Get Current User Profile",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/auth/me",
+              "host": ["{{baseUrl}}"],
+              "path": ["auth", "me"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "2. Dashboard",
+      "item": [
+        {
+          "name": "Get Dashboard Metrics & Statistics",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/dashboard/stats",
+              "host": ["{{baseUrl}}"],
+              "path": ["dashboard", "stats"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "3. Departments",
+      "item": [
+        {
+          "name": "Get All Departments (Paginated)",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/departments?page=0&size=10&search=",
+              "host": ["{{baseUrl}}"],
+              "path": ["departments"],
+              "query": [
+                { "key": "page", "value": "0" },
+                { "key": "size", "value": "10" },
+                { "key": "search", "value": "" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get All Departments (Dropdown List)",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/departments/all",
+              "host": ["{{baseUrl}}"],
+              "path": ["departments", "all"]
+            }
+          }
+        },
+        {
+          "name": "Create Department",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Mechanical Engineering\",\n  \"code\": \"MECH\",\n  \"description\": \"Department of Mechanical & Robotics\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/departments",
+              "host": ["{{baseUrl}}"],
+              "path": ["departments"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "4. Students",
+      "item": [
+        {
+          "name": "Get All Students",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/students?page=0&size=10&search=",
+              "host": ["{{baseUrl}}"],
+              "path": ["students"],
+              "query": [
+                { "key": "page", "value": "0" },
+                { "key": "size", "value": "10" },
+                { "key": "search", "value": "" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Student Academic Report",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/students/1/report",
+              "host": ["{{baseUrl}}"],
+              "path": ["students", "1", "report"]
+            }
+          }
+        },
+        {
+          "name": "Create Student (Admin)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"rollNumber\": \"STU-2024-099\",\n  \"name\": \"Albert Einstein\",\n  \"email\": \"albert@sms.com\",\n  \"phone\": \"+1 555-9999\",\n  \"dateOfBirth\": \"2002-03-14\",\n  \"address\": \"Princetone St, Science Park\",\n  \"enrollmentYear\": 2024,\n  \"departmentId\": 1,\n  \"password\": \"Student@123\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/students",
+              "host": ["{{baseUrl}}"],
+              "path": ["students"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "5. Teachers",
+      "item": [
+        {
+          "name": "Get All Teachers",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/teachers?page=0&size=10",
+              "host": ["{{baseUrl}}"],
+              "path": ["teachers"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "6. Courses",
+      "item": [
+        {
+          "name": "Get All Courses",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/courses?page=0&size=10",
+              "host": ["{{baseUrl}}"],
+              "path": ["courses"]
+            }
+          }
+        },
+        {
+          "name": "Get My Assigned Courses (Teacher)",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/courses/my-courses",
+              "host": ["{{baseUrl}}"],
+              "path": ["courses", "my-courses"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "7. Enrollments",
+      "item": [
+        {
+          "name": "Enroll Student into Course",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"studentId\": 1,\n  \"courseId\": 3\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/enrollments",
+              "host": ["{{baseUrl}}"],
+              "path": ["enrollments"]
+            }
+          }
+        },
+        {
+          "name": "Get Enrollments by Course",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/enrollments/course/1?page=0&size=20",
+              "host": ["{{baseUrl}}"],
+              "path": ["enrollments", "course", "1"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "8. Attendance",
+      "item": [
+        {
+          "name": "Mark Attendance Batch",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"courseId\": 1,\n  \"date\": \"2026-10-12\",\n  \"records\": [\n    {\n      \"studentId\": 1,\n      \"status\": \"PRESENT\"\n    },\n    {\n      \"studentId\": 2,\n      \"status\": \"PRESENT\"\n    }\n  ]\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/attendance/batch",
+              "host": ["{{baseUrl}}"],
+              "path": ["attendance", "batch"]
+            }
+          }
+        },
+        {
+          "name": "Get Course Attendance Stats",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/attendance/course/1/stats",
+              "host": ["{{baseUrl}}"],
+              "path": ["attendance", "course", "1", "stats"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "9. Marks & Grades",
+      "item": [
+        {
+          "name": "Save Batch Marks",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"courseId\": 1,\n  \"examType\": \"MIDTERM\",\n  \"maxMarks\": 50.0,\n  \"items\": [\n    {\n      \"studentId\": 1,\n      \"marksObtained\": 46.5\n    },\n    {\n      \"studentId\": 2,\n      \"marksObtained\": 42.0\n    }\n  ]\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/marks/batch",
+              "host": ["{{baseUrl}}"],
+              "path": ["marks", "batch"]
+            }
+          }
+        },
+        {
+          "name": "Get Marks by Course",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/marks/course/1?examType=MIDTERM",
+              "host": ["{{baseUrl}}"],
+              "path": ["marks", "course", "1"]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

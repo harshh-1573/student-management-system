@@ -1,0 +1,31 @@
+# Build artifacts
+target/
+dist/
+node_modules/
+
+# Environment files
+.env
+*.env
+!.env.example
+!backend/.env.example
+!frontend/.env.example
+
+# IDE & Editor files
+.idea/
+*.iml
+*.iws
+*.ipr
+.vscode/
+.classpath
+.project
+.settings/
+.nb-cache/
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Maven wrapper
+!.mvn/wrapper/maven-wrapper.jar
