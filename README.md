@@ -11,7 +11,18 @@
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind%20CSS-3.4-38B2AC?logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
+<p align="left">
+  <a href="https://render.com/deploy?repo=https://github.com/harshh-1573/student-management-system" target="_blank">
+    <img src="https://render.com/images/deploy-to-render-button.svg" alt="Deploy to Render" height="32" />
+  </a>
+  &nbsp;&nbsp;
+  <a href="https://vercel.com/new/clone?repository-url=https://github.com/harshh-1573/student-management-system&root-directory=frontend" target="_blank">
+    <img src="https://vercel.com/button" alt="Deploy with Vercel" height="32" />
+  </a>
+</p>
+
 ---
+
 
 ## Table of Contents
 1. [Overview](#overview)
